@@ -5,14 +5,28 @@
 {% block title %}Home Page{% endblock title %}
 
 {% block content %}
-<h1>Top 10 Games</h1>
+<h1>Top 20 Games</h1>
 <div class="top_games">
-    Idk Probably a for loop for the top 10 games
+    <ul class="list-container">
+    {% for game in games.data %}
+    <li>
+        <img src="{{ game.box_art_url }}" alt="{{ game.name }}" width="100">
+        {{ game.name }}
+    </li>
+    {% endfor %}
+    </ul>
 </div>
 
-<h1>Top 10 Streamers</h1>
+<h1>Top 20 Streamers</h1>
 <div class="top_streamers">
-    Idk Probably a for loop for the top 10 streamers
+    <ul class="list-container">
+    {% for stream in streams.data %}
+    <li>
+        <img src="{{ stream.profile_image_url }}" alt="{{ stream.user_name }}" width="50">
+        {{ stream.user_name }} - {{ stream.viewer_count }} viewers
+    </li>
+    {% endfor %}
+    </ul>
 </div>
 
 <section class="contact_section">
