@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Home Page{% endblock title %}
+
+{% block content %}
+<h1>Top 10 Games</h1>
+<div class="top_games">
+    Idk Probably a for loop for the top 10 games
+</div>
+
+<h1>Top 10 Streamers</h1>
+<div class="top_streamers">
+    Idk Probably a for loop for the top 10 streamers
+</div>
+
+<section class="contact_section">
+
+    <h2>Contact Me!</h2>
+    <p>Feel free to drop me a line below!</p>
+
+    <!-- Form will go here -->
+        <form method="post" id="contactForm" class="center-column">
+        <!-- {% csrf_token %}
+        {{ form.name }}
+        {{ form.email }}
+        {{ form.message }} -->
+        <div class="form-btns">
+            <button type="reset">Clear Form</button>
+            <button type="submit">Send Message</button>
+        </div>
+        </form>
+    
+</section>
+{% endblock content %}
