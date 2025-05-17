@@ -5,31 +5,33 @@
 {% block title %}Home Page{% endblock title %}
 
 {% block content %}
-<h1>Top 20 Games</h1>
-<div class="top_games">
-    <ul class="list-container">
-    {% for game in games.data %}
-    <li>
-        <img src="{{ game.box_art_url }}" alt="{{ game.name }}" width="100">
-        {{ game.name }}
-    </li>
-    {% endfor %}
-    </ul>
-</div>
-
-<h1>Top 20 Streamers</h1>
-<div class="top_streamers">
-    <ul class="list-container">
-    {% for stream in streams.data %}
-    <li>
-        <img src="{{ stream.profile_image_url }}" alt="{{ stream.user_name }}" width="50">
-        {{ stream.user_name }} - {{ stream.viewer_count }} viewers
-    </li>
-    {% endfor %}
-    </ul>
-</div>
-
-<section class="contact_section">
+<section class="trending_container center-column">
+    <h1 class="subtitles">Top 20 Games</h1>
+    <div class="top_games">
+        <ul class="list-container">
+            {% for game in games.data %}
+            <a href="{% url 'game_detail' game.game_id %}">
+                <img src="{{ game.box_art_url }}" alt="{{ game.name }}" width="100">
+                {{ game.name }}
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <h1 class="subtitles">Top 20 Streamers</h1>
+    <div class="top_streamers">
+        <ul class="list-container">
+            {% for stream in streams.data %}
+            <li>
+                <img src="{{ stream.profile_image_url }}" alt="{{ stream.user_name }}" width="50">
+                {{ stream.user_name }} - {{ stream.viewer_count }} viewers
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+    
+<section class="contact_section center-column">
 
     <h2>Contact Me!</h2>
     <p>Feel free to drop me a line below!</p>

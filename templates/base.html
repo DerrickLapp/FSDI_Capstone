@@ -5,21 +5,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sections.css' %}">
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    <header class="navbar">
+    <header>
         <div class="header_left">
             <a href="{% url 'root' %}">
-                <h2 class="home_logo">Twitch Trenders</h2>
+                <h2 class="subtitles">Derrick's Twitch Trender Watcher</h2>
             </a>
         </div>
-        <div class="header_right">
-            <a href="">Games</a>
-            <a href="">Streamers</a>
+
+        <nav class="header_right center-row">
+            <!-- Hamburger button -->
+            <input type="checkbox" id="nav-burger">
+            <label for="nav-burger" class="hamburger">&#9776;</label>
+            <div class="nav-options center-row">
+                <a href="">Games</a>
+                <a href="">Streamers</a>
+                <a href="">Login</a>
+            {% if not user.is_authenticated %}
             <a href="">Login</a>
-        </div>
+            {% endif %}
+            </div>
+
+        </nav>
 
     </header>
 
