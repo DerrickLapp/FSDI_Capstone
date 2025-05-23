@@ -9,9 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/sections.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
@@ -26,9 +26,9 @@
             <!-- Hamburger button -->
             <input type="checkbox" id="nav-burger">
             <label for="nav-burger" class="hamburger">&#9776;</label>
-            <div class="nav-options center-row">
-                <a href="">Games</a>
-                <a href="">Streamers</a>
+            <div class="nav-options">
+                <a href="">Starred Games</a>
+                <a href="">Starred Streamers</a>
                 <a href="">Login</a>
             {% if not user.is_authenticated %}
             <a href="">Login</a>
@@ -39,12 +39,13 @@
 
     </header>
 
-    {% block content %}
 
+    {% block content %}
     {% endblock content %}
 
+
     <footer class="footer">
-        <h3>TTV + copyright logo + 2025</h3>
+        <h3>DTTW  ©  2025</h3>
     </footer>
 </body>
 </html>

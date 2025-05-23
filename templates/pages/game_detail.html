@@ -4,8 +4,28 @@
 {% block title %} {{ game.name }}{% endblock title %}
 
 {% block content %}
-<h1>{{ game.name }}</h1>
-<img src="{{ game.box_art_url }}" alt="{{ game.name }}">
+<section class="game-section">
+    <h1>{{ game.name }}</h1>
+    <img src="{{ game.box_art_url }}" alt="{{ game.name }}">
+    <div class="who_is_streaming">
+        <h2 class="subtitles center-row">Currently Streaming This Game</h2>
+        {% if streams %}
+        <div class="gcard_container">
+            {% for stream in streams %}
+                <div class="gcard">
+                    <h3>{{ stream.user_name }}</h3>
+                    <p><strong>{{ stream.title | truncatechars:50 }}</strong></p>
+                    <p>Viewers: {{ stream.viewer_count }}</p>
+                    <p>Started at: {{ stream.started_at }}</p>
+                    <a href="{{ stream.url }}" target="_blank">Watch Stream</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p>Currently not being Live Streamed.</p>
+        {% endif %}
+    </div>
+</section>
 
 
 {% endblock content %}

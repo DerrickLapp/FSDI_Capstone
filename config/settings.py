@@ -134,7 +134,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Load environment variables from .env file
 load_dotenv()
 
+# Twitch Info
 TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
 TWITCH_CLIENT_SECRET = os.getenv("TWITCH_CLIENT_SECRET")
 TWITCH_REDIRECT_URI = os.getenv("TWITCH_REDIRECT_URI")
 TWITCH_ACCESS_TOKEN = os.getenv("TWITCH_ACCESS_TOKEN")
+
+# Email Info
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_SSL=False
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER= os.getenv('SMTP_EMAIL')
+EMAIL_HOST_PASSWORD= os.getenv('SMTP_PASS')

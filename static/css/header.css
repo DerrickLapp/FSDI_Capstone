@@ -2,7 +2,7 @@
 /* Header */
 header {
     top: 0px;
-    height: 95px;
+    height: 100px;
     background-color: var(--primary-color);
     color: var(--secondary-color);
     display: flex;
@@ -14,6 +14,7 @@ header {
 }
 .header_left h2{
     margin-bottom: 0px;
+    margin-left: .5rem;
 }
 
 .header_right {
@@ -25,6 +26,9 @@ header {
 
 .nav-options {
     width: 100%;
+    display: flex;
+    justify-content: right;
+    margin-right: 1.5rem;
 }
 
 .nav-options a {

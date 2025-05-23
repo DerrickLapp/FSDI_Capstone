@@ -18,14 +18,14 @@
         </ul>
     </div>
     
-    <h1 class="subtitles">Top 20 Streamers</h1>
+    <h1 class="subtitles">Current Top Streamers</h1>
     <div class="top_streamers">
         <ul class="list-container">
             {% for stream in streams.data %}
-            <li>
+            <a href="{% url 'streamer_detail' stream.user_id %}">
                 <img src="{{ stream.profile_image_url }}" alt="{{ stream.user_name }}" width="50">
                 {{ stream.user_name }} - {{ stream.viewer_count }} viewers
-            </li>
+            </a>
             {% endfor %}
         </ul>
     </div>
@@ -38,10 +38,10 @@
 
     <!-- Form will go here -->
         <form method="post" id="contactForm" class="center-column">
-        <!-- {% csrf_token %}
+        {% csrf_token %}
         {{ form.name }}
         {{ form.email }}
-        {{ form.message }} -->
+        {{ form.message }}
         <div class="form-btns">
             <button type="reset">Clear Form</button>
             <button type="submit">Send Message</button>

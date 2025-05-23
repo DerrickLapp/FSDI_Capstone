@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ streamer.user_name }}{% endblock title %}
+
+{% block content %}
+<section class="streamer-section">
+    <div class="picnameandlink">
+        <div class="streamerpic">
+            <img src="{{ streamer.thumbnail_url }}" alt="{{ streamer.user_name }}">
+        </div>
+        <div class="nameandlink">
+            <h1>{{ streamer.user_name }}</h1>
+            <a href="https://www.twitch.tv/{{ streamer.user_name }}" target="_blank">Watch {{ streamer.user_name }} on Twitch</a>
+        </div>
+    </div>
+    <h2 class="subtitles center-row">Past Streams</h2>
+    <div class="scard_container">
+        {% for video in videos_data %}
+                <div class="scard">
+                    <a href="{{ video.url }}" target="_blank">
+                        <img src="{{ video.thumbnail_url }}" alt="VOD Still Proccessing">
+                        <p><strong>{{ video.title | truncatechars:50 }} ({{ video.duration }})</strong></p>
+                    </a>
+                </div>
+            {% endfor %}
+    </div>
+
+</section>
+
+
+{% endblock content %}

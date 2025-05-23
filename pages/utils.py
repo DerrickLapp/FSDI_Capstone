@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Game
+from .models import Game, StreamData
 import os
 import requests
 
@@ -33,5 +33,21 @@ def get_top_games():
 def get_top_streams():
     url = "https://api.twitch.tv/helix/streams"
     response = requests.get(url, headers=HEADERS)
+    if response.status_code == 200:
+        streams_data = response.json()["data"]
+        for stream in streams_data:
+            StreamData.objects.update_or_create (
+                streamer_id=stream["id"],
+                user_id = stream["user_id"],
+                defaults={
+                "user_name":stream["user_name"],
+                "title":stream["title"],
+                "game_id":stream["game_id"],
+                "game_name":stream["game_name"],
+                "viewer_count":stream["viewer_count"],
+                "started_at":stream["started_at"],
+                "thumbnail_url":stream["thumbnail_url"],
+                }
+            )
     return response.json()
 
