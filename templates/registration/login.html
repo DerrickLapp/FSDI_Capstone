@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login or Sign Up!{% endblock title %}
+
+{% block content %}
+
+<div class="registration-section center-column">
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+        <button type="submit">Log in</button>
+    </form>
+    <hr> <!-- Making a line break -->
+
+    <h2 class="subtitles">Don't have an Account? Sign Up!</h2>
+    <form method="POST" action="{% url 'register' %}" class="regis-on-login">
+        {%csrf_token %}
+        {{ register_form.as_p }}
+        <button type="submit">Submit</button>
+
+    </form>
+</div>
+
+{% endblock content %}

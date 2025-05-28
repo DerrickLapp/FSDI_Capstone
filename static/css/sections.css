@@ -203,3 +203,58 @@
     height: 5vh;
     width: 100%;
 }
+
+/* registration sections */
+.registration-section {
+    min-height: 90vh;
+}
+
+
+.registration-section button {
+    display: flex;
+    flex: 1 1 22%; /* Makes each item take up 25% of the width */
+    flex-direction: column;
+    padding: 10px;
+    margin: 3px;
+    background-color: #f4f4f4; /* Optional */
+    box-sizing: border-box; /* Prevents overflow */
+    text-align: center;
+    justify-content: left;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.registration-section button:hover {
+    border-bottom: solid 5px black;
+    box-shadow: 2px 2px 2px var(--secondary-color);
+}
+
+.registration-section form, .registration-section h2 {
+    margin-bottom: 2rem;
+}
+
+.regis-on-login {
+    width: 70%;
+}
+
+.register-page {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.register-page li{
+    list-style: none;
+}
+.register-page h2{
+    margin-bottom: 2rem;
+}
+
+/* Favorite Stars */
+.star-icon {
+    cursor: pointer;
+    color: gray;
+}
+
+.star-icon.active {
+    color: gold;
+}

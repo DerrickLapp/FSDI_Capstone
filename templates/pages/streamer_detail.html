@@ -10,7 +10,10 @@
             <img src="{{ streamer.thumbnail_url }}" alt="{{ streamer.user_name }}">
         </div>
         <div class="nameandlink">
-            <h1>{{ streamer.user_name }}</h1>
+            <h1>
+                {{ streamer.user_name }}
+                <span class="star-icon" data-stream-id="{{ streamer.id }}">★</span>
+            </h1>
             <a href="https://www.twitch.tv/{{ streamer.user_name }}" target="_blank">Watch {{ streamer.user_name }} on Twitch</a>
         </div>
     </div>

@@ -27,12 +27,16 @@
             <input type="checkbox" id="nav-burger">
             <label for="nav-burger" class="hamburger">&#9776;</label>
             <div class="nav-options">
-                <a href="">Starred Games</a>
-                <a href="">Starred Streamers</a>
-                <a href="">Login</a>
-            {% if not user.is_authenticated %}
-            <a href="">Login</a>
-            {% endif %}
+                {% if request.user.is_authenticated %}
+                    <a href="">Your Profile</a>
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                {% endif %}
+                
             </div>
 
         </nav>
@@ -47,5 +51,11 @@
     <footer class="footer">
         <h3>DTTW  ©  2025</h3>
     </footer>
+
+    <!-- csrf token -->
+     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+    <!-- JS Scripts -->
+    <script src="{% static 'js/favorites.js' %}"></script>
 </body>
 </html>

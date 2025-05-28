@@ -1,10 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
-from .utils import HEADERS, get_top_games, get_top_streams
-from .models import Game, StreamData
-from .forms import ContactForm
 from django.core.mail import send_mail
-import requests
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from .forms import CustomUserCreationForm
+from .utils import HEADERS, get_top_games, get_top_streams
+from .models import Game, StreamData, Favorite
+from .forms import ContactForm
+import requests, json
 
 # Create your views here.
 def home_view(request):
@@ -124,7 +129,6 @@ def streamer_detail(request, user_id):
     videos_url = f"https://api.twitch.tv/helix/videos?user_id={user_id}"
     videos_response = requests.get(videos_url, headers=HEADERS)
     videos_data = videos_response.json().get("data", [])
-    print(videos_data)
     
 
     for video in videos_data:
@@ -139,3 +143,80 @@ def streamer_detail(request, user_id):
 def contact_view(request):
     
     return render(request, 'pages/contact.html', {})
+
+
+
+# Registration View
+def register(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            return redirect("home")
+    else:
+        form = CustomUserCreationForm()
+    return render(request, "registration/register.html", {"form": form})
+
+# Login/Registration View
+def login_register(request):
+    if request.method == "POST":
+        login_form = AuthenticationForm(request, data=request.POST)
+        if login_form.is_valid():
+            user = authenticate(
+                username=login_form.cleaned_data["username"],
+                password=login_form.cleaned_data["password"]
+            )
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+    else:
+        login_form = AuthenticationForm()
+
+    register_form = CustomUserCreationForm()
+    
+    return render(request, "registration/login.html", {"login_form": login_form, "register_form": register_form})
+
+
+# Handling favorite
+@login_required
+def toggle_favorite(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        favorite, _ = Favorite.objects.update_or_create(user=request.user)
+
+        # Make sure to check whether game or streamer
+        game_id = data.get("game_id")
+        streamer_id = data.get("streamer_id")
+
+        if game_id:
+                game = Game.objects.get(id=game_id)
+                print(game)
+                print(favorite.favorite_games)
+                if favorite.favorite_games == game:
+                    favorite.favorite_games = None #Unfavorite
+                    response_message = "Removed game from favorites"
+
+                else:
+                    favorite.favorite_games = game #favorite    
+                    response_message = "Added game to favorites"
+
+                favorite.save()
+
+
+        if streamer_id:
+                streamer = StreamData.objects.get(id=streamer_id)
+                print(streamer)
+                print(favorite.favorite_streamers)
+                if favorite.favorite_streamers == streamer:
+                    favorite.favorite_streamers = None #Unfavorite
+                    response_message = "Removed streamer from favorites"
+
+                else:
+                    favorite.favorite_streamers = streamer #favorite
+                    response_message = "Added streamer to favorites"
+
+                favorite.save()
+    return JsonResponse({"status": response_message})
+

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -24,5 +25,19 @@ class StreamData(models.Model):
     viewer_count = models.IntegerField(null=True, blank=True)
     started_at = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Streamer"
+        verbose_name_plural = "Streamers"
+
     def __str__(self):
         return f"{self.user_name} streaming {self.game_name} at {self.started_at}"
+    
+
+# Favorites
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    favorite_games = models.ForeignKey(Game, null=True, blank=True, related_name="favorite_games", on_delete=models.CASCADE)
+    favorite_streamers = models.ForeignKey(StreamData, null=True, blank=True, related_name="favorite_streamers", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} - {self.favorite_games} - {self.favorite_streamers}"

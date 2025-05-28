@@ -31,7 +31,7 @@ header {
     margin-right: 1.5rem;
 }
 
-.nav-options a {
+.nav-options a, .nav-options form {
     color: #FFFFFF;
     background-color: #4a5a5a;
     text-transform: uppercase;
@@ -42,7 +42,12 @@ header {
     box-shadow: 2px 2px 2px #0a0a0a;
 }
 
-.nav-options a:hover {
+.nav-options form button {
+    all: unset; /* Wanted to make sure the button didn't have extra styling */
+    cursor:pointer; /* Still needs to act like a button though */
+}
+
+.nav-options a:hover, .nav-options form:hover {
     border-bottom: solid 5px black;
 }
 
