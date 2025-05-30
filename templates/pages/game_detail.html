@@ -7,7 +7,7 @@
 <section class="game-section">
     <h1>
         {{ game.name }}
-        <span class="star-icon" data-game-id="{{ game.id }}">★</span>
+        <span class="star-icon {% if is_favorited %}active{% endif %}" data-game-id="{{ game.id }}">★</span>
     </h1>
     <img src="{{ game.box_art_url }}" alt="{{ game.name }}">
     <div class="who_is_streaming">

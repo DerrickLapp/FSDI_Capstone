@@ -12,7 +12,7 @@
         <div class="nameandlink">
             <h1>
                 {{ streamer.user_name }}
-                <span class="star-icon" data-stream-id="{{ streamer.id }}">★</span>
+                <span class="star-icon {% if is_favorited %}active{% endif %}" data-stream-id="{{ streamer.id }}">★</span>
             </h1>
             <a href="https://www.twitch.tv/{{ streamer.user_name }}" target="_blank">Watch {{ streamer.user_name }} on Twitch</a>
         </div>

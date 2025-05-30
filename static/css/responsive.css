@@ -1,4 +1,4 @@
-@media (max-width: 790px) {
+@media (max-width: 808px) {
     html {
         font-size: 12px;
     }
@@ -58,7 +58,7 @@
 
 }
 
-@media ((min-width: 791px) and (max-width:1007px)) {
+@media ((min-width: 809px) and (max-width:1007px)) {
     html {
         font-size: 16px;
     }

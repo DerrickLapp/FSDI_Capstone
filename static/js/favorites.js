@@ -4,6 +4,36 @@ function getCSRFToken() {
 }
 
 // Toggling the Favorite Star
+document.addEventListener("DOMContentLoaded", function() {
+    // Check favorite status on page load
+    document.querySelectorAll(".star-icon").forEach(star => {
+        let gameId = star.dataset.gameId;
+        let streamerId = star.dataset.streamerId;
+
+        if (gameId) {
+            fetch(`/check-favorite-game/${gameId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.favorited) {
+                    star.classList.add("active"); //Marked as favorited
+                }
+            });
+        }
+
+        if (streamerId) {
+            fetch(`/check-favorite-game/${streamerId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.favorited) {
+                    star.classList.add("active"); //Marked as favorited
+                }
+            });
+        }
+
+
+    });
+});
+
 document.querySelectorAll(".star-icon").forEach(star => {
     star.addEventListener("click", function() {
         this.classList.toggle("active"); // toggles star color

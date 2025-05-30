@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from .utils import HEADERS, get_top_games, get_top_streams
-from .models import Game, StreamData, Favorite
+from .models import Game, StreamData, FavoriteGame, FavoriteStreamer
 from .forms import ContactForm
 import requests, json
 
@@ -94,8 +94,11 @@ def home_view(request):
 
 #  individual games and streamers
 def game_detail(request, game_id):
+    user = request.user
     game = get_object_or_404(Game, game_id = game_id)
     game.box_art_url = game.box_art_url.replace("{width}", "300").replace("{height}", "400")
+    is_favorited = FavoriteGame.objects.filter(user=user, favorite_games=game).exists()
+
     
     # Fetches streaming stats
     url = f"https://api.twitch.tv/helix/streams?game_id={game_id}"
@@ -114,12 +117,14 @@ def game_detail(request, game_id):
                 "url": f"https://www.twitch.tv/{stream['user_name']}"
             })
 
-    return render(request, "pages/game_detail.html", {"game": game, "streams": streams})
+    return render(request, "pages/game_detail.html", {"game": game, "streams": streams, "is_favorited":is_favorited})
 
 
 def streamer_detail(request, user_id):
+    user = request.user
     streamer = get_object_or_404(StreamData, user_id = user_id)
     streamer.thumbnail_url = streamer.thumbnail_url.replace("{width}", "300").replace("{height}", "400")
+    is_favorited = FavoriteStreamer.objects.filter(user=user, favorite_streamers=streamer).exists()
 
     # Fetches streaming stats
     url =f"https://api.twitch.tv/helix/streams?user_id={user_id}"
@@ -183,40 +188,51 @@ def login_register(request):
 @login_required
 def toggle_favorite(request):
     if request.method == "POST":
+        user = request.user
         data = json.loads(request.body)
-        favorite, _ = Favorite.objects.update_or_create(user=request.user)
 
         # Make sure to check whether game or streamer
         game_id = data.get("game_id")
         streamer_id = data.get("streamer_id")
 
         if game_id:
-                game = Game.objects.get(id=game_id)
-                print(game)
-                print(favorite.favorite_games)
-                if favorite.favorite_games == game:
-                    favorite.favorite_games = None #Unfavorite
-                    response_message = "Removed game from favorites"
-
-                else:
-                    favorite.favorite_games = game #favorite    
-                    response_message = "Added game to favorites"
-
-                favorite.save()
+            game = get_object_or_404(Game, id=game_id)
+            existing_favorite = FavoriteGame.objects.filter(user=user, favorite_games=game).first()
+            if existing_favorite:
+                # If already favorited, removes it
+                existing_favorite.delete()
+                return JsonResponse({"message": "Removed from favorites", "status": "removed"})
+            else:
+                # If NOT favorited, add it to favorites
+                FavoriteGame.objects.create(user=user, favorite_games=game)
+                return JsonResponse({"message": "Added to favorites","status": "added"})
 
 
         if streamer_id:
-                streamer = StreamData.objects.get(id=streamer_id)
-                print(streamer)
-                print(favorite.favorite_streamers)
-                if favorite.favorite_streamers == streamer:
-                    favorite.favorite_streamers = None #Unfavorite
-                    response_message = "Removed streamer from favorites"
+            streamer = get_object_or_404(StreamData, id=streamer_id)
+            existing_favorite = FavoriteStreamer.objects.filter(user=user, favorite_streamers=streamer).first()
+            if existing_favorite:
+                # If already favorited, removes it
+                existing_favorite.delete()
+                return JsonResponse({"message": "Removed from favorites", "status": "removed"})
+            else:
+                # If NOT favorited, add it to favorites
+                FavoriteStreamer.objects.create(user=user, favorite_streamers=streamer)
+                return JsonResponse({"message": "Added to favorites","status": "added"})
+    
 
-                else:
-                    favorite.favorite_streamers = streamer #favorite
-                    response_message = "Added streamer to favorites"
+# User Profile View
+def profile_view(request):
+    user = request.user
+    favorite_games = Game.objects.filter(favorite_games__user=user).all()
+    favorite_streamers = StreamData.objects.filter(favorite_streamers__user=user).all()
 
-                favorite.save()
-    return JsonResponse({"status": response_message})
+    for game in favorite_games:
+        game.box_art_url = game.box_art_url.replace("{width}", "300").replace("{height}", "400")
 
+    for streamer in favorite_streamers:
+        streamer.profile_image_url = streamer.thumbnail_url.replace("{width}", "300").replace("{height}", "400")
+
+
+
+    return render(request, "pages/profile.html", {"favorite_games": favorite_games, "favorite_streamers": favorite_streamers})

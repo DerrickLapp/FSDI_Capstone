@@ -4,6 +4,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 2rem;
+    min-height: 90vh;
 }
 
 .list-container {
@@ -23,9 +24,20 @@
     background-color: #f4f4f4; /* Optional */
     box-sizing: border-box; /* Prevents overflow */
     text-align: center;
-    justify-content: left;
+    justify-content: center;
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
+}
+
+.list-container a img{
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.top_streamers img, .top_games img, .fave-games img, .fave-streamers img {
+    width: 65%;
+    margin-bottom: .75rem;
 }
 
 .list-container a:hover {
@@ -130,6 +142,8 @@
     min-height: 90vh;
     margin-bottom: 2rem;
     width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .picnameandlink {
     display: flex;
@@ -137,6 +151,10 @@
 }
 
 .streamer-section a {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
     color: #FFFFFF;
     background-color: #4a5a5a;
     text-transform: uppercase;
@@ -191,6 +209,17 @@
     height: 70%;
     object-fit: cover;
     border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Profile Page */
+.fave-games a, .fave-streamers a {
+    max-width: 33%;
+    margin-bottom: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* footer */

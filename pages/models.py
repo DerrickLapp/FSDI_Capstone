@@ -17,7 +17,7 @@ class Game(models.Model):
 class StreamData(models.Model):
     streamer_id = models.CharField(max_length=255, unique=True)
     user_name = models.CharField(max_length=255)
-    user_id = models.CharField(max_length=255, unique=True)
+    user_id = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     game_id = models.CharField(max_length=255)
     game_name = models.CharField(max_length=255)
@@ -34,10 +34,16 @@ class StreamData(models.Model):
     
 
 # Favorites
-class Favorite(models.Model):
+class FavoriteGame(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     favorite_games = models.ForeignKey(Game, null=True, blank=True, related_name="favorite_games", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} - {self.favorite_games}"
+    
+class FavoriteStreamer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     favorite_streamers = models.ForeignKey(StreamData, null=True, blank=True, related_name="favorite_streamers", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user} - {self.favorite_games} - {self.favorite_streamers}"
+        return f"{self.user} - {self.favorite_streamers.user_name}"

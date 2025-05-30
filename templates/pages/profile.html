@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ user.name }}{% endblock title %}
+
+{% block content %}
+
+<div class="trending_container">
+    
+    <h2 class="subtitles">Favorite Games:</h2>
+    <div class="fave-games">
+        <ul class="list-container">
+            {% for game in favorite_games %}
+            <a href="{% url 'game_detail' game.game_id %}">
+                <img src="{{ game.box_art_url }}" alt="{{ game.name }}" width="100">
+                {{ game.name }}
+            </a>
+            {% empty %}
+            <p>No Favorite Games Yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <h2 class="subtitles">Favorite Streamers:</h2>
+    <div class="fave-streamers">
+        <ul class="list-container">
+            {% for stream in favorite_streamers %}
+            <a href="{% url 'streamer_detail' stream.user_id %}">
+                <img src="{{ stream.profile_image_url }}" alt="{{ stream.user_name }}" width="50">
+                {{ stream.user_name }} - {{ stream.viewer_count }} viewers
+            </a>
+            {% empty %}
+            <p>No Favorite Streamers Yet.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    
+
+{% endblock content %}

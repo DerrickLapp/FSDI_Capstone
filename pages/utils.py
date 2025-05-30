@@ -38,9 +38,9 @@ def get_top_streams():
         for stream in streams_data:
             StreamData.objects.update_or_create (
                 streamer_id=stream["id"],
-                user_id = stream["user_id"],
                 defaults={
                 "user_name":stream["user_name"],
+                "user_id":stream["user_id"],
                 "title":stream["title"],
                 "game_id":stream["game_id"],
                 "game_name":stream["game_name"],
