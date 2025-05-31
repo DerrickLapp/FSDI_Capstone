@@ -10,6 +10,7 @@
         {% csrf_token %}
         {{ login_form.as_p }}
         <button type="submit">Log in</button>
+        <a href="{% url 'password_reset' %}">Forgot Password?</a>
     </form>
     <hr> <!-- Making a line break -->
 

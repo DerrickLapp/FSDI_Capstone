@@ -12,5 +12,8 @@ urlpatterns = [
     path("login/", login_register, name="login"),
     path("register/", register, name="register"),
     path("logout/", auth_views.LogoutView.as_view(next_page="home"), name="logout"),
+    path("change_password", auth_views.PasswordChangeView.as_view(), name="password_change"),
+    path("change_password_done", auth_views.PasswordChangeDoneView.as_view(), name="password_change_done"),
+    path("password_reset", auth_views.PasswordResetView.as_view(), name="password_reset"),
     path("toggle_favorite/", toggle_favorite, name="toggle_favorite"),
 ]

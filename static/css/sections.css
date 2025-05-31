@@ -123,6 +123,14 @@
     margin-top: 2rem;
 }
 
+.gcard_container img{
+    margin-top: .5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-height: 70%;
+}
+
 .gcard {
     display: flex;
     flex-direction: column;
@@ -215,45 +223,50 @@
 
 
 /* Profile Page */
+.fave-games ul, .fave-streamers ul {
+    justify-content: center;
+}
+
 .fave-games a, .fave-streamers a {
-    max-width: 33%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 25%;
+    margin-bottom: 1.5rem;
+}
+
+.pass-change {
+    margin-top: 1.5rem;
+}
+.pass-change a {
+    color: #FFFFFF;
+    background-color: var(--secondary-color);
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    padding: 14px;
+    border-radius: 2px;
+    box-shadow: 2px 2px 2px #0a0a0a;
+    max-width: 45%;
     margin-bottom: 1.5rem;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* footer */
-.footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: auto;
-    background-color: var(--secondary-color);
-    height: 5vh;
-    width: 100%;
-}
 
 /* registration sections */
 .registration-section {
     min-height: 90vh;
 }
 
-
-.registration-section button {
-    display: flex;
-    flex: 1 1 22%; /* Makes each item take up 25% of the width */
-    flex-direction: column;
+.registration-section button, .registration-section a {
     padding: 10px;
-    margin: 3px;
-    background-color: #f4f4f4; /* Optional */
-    box-sizing: border-box; /* Prevents overflow */
+    margin: .5rem;
     text-align: center;
-    justify-content: left;
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
 }
 
-.registration-section button:hover {
+.registration-section button:hover, .registration-section a:hover {
     border-bottom: solid 5px black;
     box-shadow: 2px 2px 2px var(--secondary-color);
 }
@@ -271,7 +284,7 @@
     margin-left: auto;
     margin-right: auto;
 }
-.register-page li{
+.register-page li, .registration-section li{
     list-style: none;
 }
 .register-page h2{
@@ -286,4 +299,16 @@
 
 .star-icon.active {
     color: gold;
+}
+
+
+/* footer */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    background-color: var(--secondary-color);
+    height: 5vh;
+    width: 100%;
 }

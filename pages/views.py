@@ -107,15 +107,18 @@ def game_detail(request, game_id):
 
     if response.status_code == 200:
         data = response.json().get("data", [])
-
+        
         for stream in data:
             streams.append({
                 "user_name": stream["user_name"],
                 "title": stream["title"],
                 "viewer_count": stream["viewer_count"],
                 "started_at": stream["started_at"],
-                "url": f"https://www.twitch.tv/{stream['user_name']}"
+                "url": f"https://www.twitch.tv/{stream['user_name']}",
+                "thumbnail_url": stream["thumbnail_url"].replace("{width}", "300").replace("{height}", "400")
             })
+        
+
 
     return render(request, "pages/game_detail.html", {"game": game, "streams": streams, "is_favorited":is_favorited})
 
