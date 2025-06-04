@@ -100,10 +100,14 @@ def game_detail(request, game_id):
     is_favorited = FavoriteGame.objects.filter(user=user, favorite_games=game).exists()
 
     
-    # Fetches streaming stats
+    # Fetches current streamers of Game
     url = f"https://api.twitch.tv/helix/streams?game_id={game_id}"
     response = requests.get(url, headers=HEADERS)
     streams = []
+
+    # Fetches past 30 days from twitchtracker.com
+    tturl = f"https://twitchtracker.com/api/games/summary/{game_id}"
+    ttresponse = requests.get(tturl)
 
     if response.status_code == 200:
         data = response.json().get("data", [])
@@ -117,34 +121,51 @@ def game_detail(request, game_id):
                 "url": f"https://www.twitch.tv/{stream['user_name']}",
                 "thumbnail_url": stream["thumbnail_url"].replace("{width}", "300").replace("{height}", "400")
             })
+
+    if ttresponse.status_code == 200:
+        pdata = ttresponse.json()
+        # pdata will hold 'avg_viewers', 'avg_channels', 'rank', and 'hours_watched'
         
 
 
-    return render(request, "pages/game_detail.html", {"game": game, "streams": streams, "is_favorited":is_favorited})
+    return render(request, "pages/game_detail.html", {"game": game, "streams": streams, "is_favorited":is_favorited, "pdata": pdata})
 
 
 def streamer_detail(request, user_id):
     user = request.user
     streamer = get_object_or_404(StreamData, user_id = user_id)
+    user_name = streamer.user_name
     streamer.thumbnail_url = streamer.thumbnail_url.replace("{width}", "300").replace("{height}", "400")
     is_favorited = FavoriteStreamer.objects.filter(user=user, favorite_streamers=streamer).exists()
 
     # Fetches streaming stats
     url =f"https://api.twitch.tv/helix/streams?user_id={user_id}"
     response = requests.get(url, headers=HEADERS)
+    streams = []
 
     # Fetching past videos
     videos_url = f"https://api.twitch.tv/helix/videos?user_id={user_id}"
     videos_response = requests.get(videos_url, headers=HEADERS)
     videos_data = videos_response.json().get("data", [])
+
+    # Fetches past 30 days from twitchtracker.com
+    tturl = f"https://twitchtracker.com/api/channels/summary/{user_name}"
+    ttresponse = requests.get(tturl)
     
 
     for video in videos_data:
         if "thumbnail_url" in video:
             video["thumbnail_url"] = video["thumbnail_url"].replace("%{width}", "300").replace("%{height}", "400")
-    
 
-    return render(request, "pages/streamer_detail.html", {"streamer": streamer, "videos_data": videos_data})
+
+    if response.status_code == 200:
+        
+        if ttresponse.status_code == 200:
+            pdata = ttresponse.json()
+            # pdata will hold 'rank', 'minutes_streamed', 'avg_viewers', 'max_viewers', 'hours_watched', 'followers', and 'followers_total'
+
+
+    return render(request, "pages/streamer_detail.html", {"streamer": streamer, "videos_data": videos_data, "pdata": pdata})
 
 
 # Contact View

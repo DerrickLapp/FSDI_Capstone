@@ -50,4 +50,3 @@ def get_top_streams():
                 }
             )
     return response.json()
-

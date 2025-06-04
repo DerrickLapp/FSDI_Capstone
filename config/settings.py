@@ -141,6 +141,7 @@ TWITCH_CLIENT_SECRET = os.getenv("TWITCH_CLIENT_SECRET")
 TWITCH_REDIRECT_URI = os.getenv("TWITCH_REDIRECT_URI")
 TWITCH_ACCESS_TOKEN = os.getenv("TWITCH_ACCESS_TOKEN")
 
+
 # Email Info
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

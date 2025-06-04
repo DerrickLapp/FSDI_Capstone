@@ -17,6 +17,19 @@
             <a href="https://www.twitch.tv/{{ streamer.user_name }}" target="_blank">Watch {{ streamer.user_name }} on Twitch</a>
         </div>
     </div>
+    <div class="pdata center-row">
+            <h2 class="subtitles">
+                Past 30 day Activity
+                <span class="info-from-icon">ⓘ
+                    <span class="info-from-text">Data sourced from TwitchTracker.com</span>
+                </span>
+            </h2>
+            <ul>
+                {% for key, value in pdata.items %}
+                <li class="text-label">{{key}}: {{value}}</li>
+                {% endfor %}
+            </ul>
+        </div>
     <h2 class="subtitles center-row">Past Streams</h2>
     <div class="scard_container">
         {% for video in videos_data %}

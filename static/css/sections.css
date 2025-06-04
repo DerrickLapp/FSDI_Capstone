@@ -156,6 +156,7 @@
 .picnameandlink {
     display: flex;
     margin-left: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .streamer-section a {
@@ -299,6 +300,66 @@
 
 .star-icon.active {
     color: gold;
+}
+
+/* Past Data */
+.pdata {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.pdata ul {
+    display: grid;
+    list-style: none;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+
+.pdata li {
+    margin-top: 1rem;
+}
+
+
+/* Tooltip text */
+.info-from-icon {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.info-from-icon a {
+    padding: 0px !important;
+    margin: auto !important;
+}
+
+.info-from-icon .info-from-text {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    font-size: small;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.info-from-icon:hover .info-from-text {
+    visibility: visible;
+}
+
+.info-from-icon .info-from-text::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+
 }
 
 
