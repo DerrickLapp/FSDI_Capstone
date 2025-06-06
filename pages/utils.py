@@ -37,11 +37,11 @@ def get_top_streams():
         streams_data = response.json()["data"]
         for stream in streams_data:
             StreamData.objects.update_or_create (
-                streamer_id=stream["id"],
+                user_id = stream["user_id"],
                 defaults={
                 "user_name":stream["user_name"],
-                "user_id":stream["user_id"],
                 "title":stream["title"],
+                "streamer_id":stream["id"],
                 "game_id":stream["game_id"],
                 "game_name":stream["game_name"],
                 "viewer_count":stream["viewer_count"],

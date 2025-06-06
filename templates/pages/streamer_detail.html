@@ -20,12 +20,14 @@
     <div class="pdata center-row">
             <h2 class="subtitles">
                 Past 30 day Activity
-                <span class="info-from-icon">ⓘ
+                <span class="info-from-icon"><a href="https://www.twitchtracker.com" target="_blank">
+                    ⓘ
                     <span class="info-from-text">Data sourced from TwitchTracker.com</span>
+                </a>
                 </span>
             </h2>
             <ul>
-                {% for key, value in pdata.items %}
+                {% for key, value in updated_pdata.items %}
                 <li class="text-label">{{key}}: {{value}}</li>
                 {% endfor %}
             </ul>

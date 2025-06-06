@@ -15,9 +15,9 @@ class Game(models.Model):
 
 # Stream Data for any specific streamer
 class StreamData(models.Model):
-    streamer_id = models.CharField(max_length=255, unique=True)
+    streamer_id = models.CharField(max_length=255)
     user_name = models.CharField(max_length=255)
-    user_id = models.CharField(max_length=255)
+    user_id = models.CharField(max_length=255, unique=True)
     title = models.CharField(max_length=255)
     game_id = models.CharField(max_length=255)
     game_name = models.CharField(max_length=255)
@@ -28,9 +28,10 @@ class StreamData(models.Model):
     class Meta:
         verbose_name = "Streamer"
         verbose_name_plural = "Streamers"
+        ordering = ["user_name", "started_at"]
 
     def __str__(self):
-        return f"{self.user_name} streaming {self.game_name} at {self.started_at}"
+        return f"{self.user_name}"
     
 
 # Favorites

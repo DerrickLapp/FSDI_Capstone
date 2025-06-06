@@ -53,11 +53,11 @@
     padding: .5rem;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 3rem;
-    margin-bottom: .5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     border: 2px solid var(--secondary-color);
     min-height: 40vh;
-    width: 70%;
+    max-width: 33%;
 }
 
 .contact_section p{
@@ -157,6 +157,7 @@
     display: flex;
     margin-left: 3rem;
     margin-bottom: 1.5rem;
+    margin-top: .5rem;
 }
 
 .streamer-section a {
@@ -334,6 +335,7 @@
 }
 
 .info-from-icon .info-from-text {
+    margin-left: 1rem !important;
     visibility: hidden;
     background-color: black;
     color: #fff;
