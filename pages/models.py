@@ -17,13 +17,14 @@ class Game(models.Model):
 class StreamData(models.Model):
     streamer_id = models.CharField(max_length=255)
     user_name = models.CharField(max_length=255)
-    user_id = models.CharField(max_length=255, unique=True)
+    user_id = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     game_id = models.CharField(max_length=255)
     game_name = models.CharField(max_length=255)
     thumbnail_url = models.URLField()
     viewer_count = models.IntegerField(null=True, blank=True)
     started_at = models.DateTimeField(null=True, blank=True)
+    user_login = models.CharField(max_length=255, unique=True)
 
     class Meta:
         verbose_name = "Streamer"

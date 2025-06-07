@@ -47,6 +47,7 @@ def get_top_streams():
                 "viewer_count":stream["viewer_count"],
                 "started_at":stream["started_at"],
                 "thumbnail_url":stream["thumbnail_url"],
+                "user_login":stream["user_login"],
                 }
             )
     return response.json()

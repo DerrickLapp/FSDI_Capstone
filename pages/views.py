@@ -141,14 +141,13 @@ def game_detail(request, game_id):
 def streamer_detail(request, user_id):
     user = request.user
     streamer = get_object_or_404(StreamData, user_id = user_id)
-    user_name = streamer.user_name
+    user_login = streamer.user_login
     streamer.thumbnail_url = streamer.thumbnail_url.replace("{width}", "300").replace("{height}", "400")
     is_favorited = FavoriteStreamer.objects.filter(user=user, favorite_streamers=streamer).exists()
 
     # Fetches current streaming stats
     url =f"https://api.twitch.tv/helix/streams?user_id={user_id}"
     response = requests.get(url, headers=HEADERS)
-    streams = []
 
     # Fetching past videos
     videos_url = f"https://api.twitch.tv/helix/videos?user_id={user_id}"
@@ -156,7 +155,7 @@ def streamer_detail(request, user_id):
     videos_data = videos_response.json().get("data", [])
 
     # Fetches Streamer's past 30 day history from twitchtracker.com
-    tturl = f"https://twitchtracker.com/api/channels/summary/{user_name}"
+    tturl = f"https://twitchtracker.com/api/channels/summary/{user_login}"
     ttresponse = requests.get(tturl)
     
 
@@ -177,9 +176,13 @@ def streamer_detail(request, user_id):
             "hours_watched": "Total # of Hours Watched",
             "followers": "# of New Followers",
             "followers_total": "Total # of Followers",
-        }
-        updated_pdata = {key_change.get(k, k): v for k, v in pdata.items()}
+            }
+        else:
+            pdata = {}
 
+    updated_pdata = {key_change.get(k, k): v for k, v in pdata.items()}
+
+    print(response)
 
     return render(request, "pages/streamer_detail.html", {"streamer": streamer, "videos_data": videos_data, "is_favorited": is_favorited, "updated_pdata": updated_pdata})
 
