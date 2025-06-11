@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.text import slugify
+from django.utils.timezone import now
+from datetime import timedelta
 from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,32 +14,44 @@ import requests, json
 
 # Create your views here.
 def home_view(request):
+    # If last fetched time is > 10 minutes, get top games and streams
+    latest_entry = Game.objects.order_by('-fetched_at').first()
 
-    games = get_top_games()
-    streams = get_top_streams()
+    if not latest_entry or now() - latest_entry.fetched_at > timedelta(minutes=1):
+        get_top_games()
+        get_top_streams()
+
+    # Gets 20 most recent entries in the database
+    recent_games = Game.objects.order_by("-fetched_at")[:20]
+    recent_streams = StreamData.objects.order_by("-fetched_at")[:20]
+
+    # Gets the Contact Form
     form = ContactForm()
 
-    if "data" in games:
-        for game in games["data"]:
-            game["box_art_url"] = game["box_art_url"].replace("{width}", "300").replace("{height}", "400")
-            game["game_id"] = game["id"]
-            
 
-    if "data" in streams:
-        for stream in streams["data"]:
-            stream["streamer_id"] = stream["id"]
-            stream["user_name"] = stream["user_name"]
-            stream["user_id"] = stream["user_id"]
-            stream["title"] = stream["title"]
-            stream["game_id"] = stream["game_id"]
-            stream["game_name"] = stream["game_name"]
-            stream["viewer_count"] = stream["viewer_count"]
-            stream["started_at"] = stream["started_at"]
+    # Gets the data from the database to present to HTML
+    for game in recent_games:
+        game.box_art_url = game.box_art_url.replace("{width}", "300").replace("{height}", "400")
+        
 
-            if "thumbnail_url" in stream:  # Some streams might use thumbnail_url
-                stream["profile_image_url"] = stream["thumbnail_url"].replace("{width}", "300").replace("{height}", "400")
+    for stream in recent_streams:
+        stream.streamer_id = stream.id
+        stream.user_name = stream.user_name
+        stream.user_id = stream.user_id
+        stream.title = stream.title
+        stream.game_id = stream.game_id
+        stream.game_name = stream.game_name
+        stream.viewer_count = stream.viewer_count
+        stream.started_at = stream.started_at
+        stream.profile_image_url = stream.thumbnail_url.replace("{width}", "300").replace("{height}", "400")
+
+    # Reverses the List as 20th most recent would show first otherwise
+    games = list(recent_games)[::-1]
+    streams = list(recent_streams)[::-1]
 
 
+
+    # Contact Form Information
     if request.method == "POST":
         form = ContactForm(request.POST)
         #collect the data of the form

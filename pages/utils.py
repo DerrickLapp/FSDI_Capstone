@@ -25,7 +25,7 @@ def get_top_games():
                 game_id=game["id"],
                 defaults={
                     "name": game["name"],
-                    "box_art_url": game["box_art_url"]
+                    "box_art_url": game["box_art_url"],
                 }
             )
     return response.json()
@@ -51,3 +51,5 @@ def get_top_streams():
                 }
             )
     return response.json()
+
+

@@ -8,6 +8,7 @@ class Game(models.Model):
     name = models.CharField(max_length=255)
     game_id = models.CharField(max_length=255)
     box_art_url = models.URLField()
+    fetched_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -25,6 +26,7 @@ class StreamData(models.Model):
     viewer_count = models.IntegerField(null=True, blank=True)
     started_at = models.DateTimeField(null=True, blank=True)
     user_login = models.CharField(max_length=255, unique=True)
+    fetched_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     class Meta:
         verbose_name = "Streamer"
@@ -49,3 +51,4 @@ class FavoriteStreamer(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.favorite_streamers.user_name}"
+    

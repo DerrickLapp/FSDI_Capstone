@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 
 {% block title %}Home Page{% endblock title %}
@@ -9,7 +10,7 @@
     <h1 class="subtitles">Today's Top 20 Games</h1>
     <div class="top_games">
         <ul class="list-container">
-            {% for game in games.data %}
+            {% for game in games %}
             <a href="{% url 'game_detail' game.game_id %}">
                 <img src="{{ game.box_art_url }}" alt="{{ game.name }}" width="100">
                 {{ game.name }}
@@ -21,10 +22,10 @@
     <h1 class="subtitles">Current Top Streamers</h1>
     <div class="top_streamers">
         <ul class="list-container">
-            {% for stream in streams.data %}
+            {% for stream in streams %}
             <a href="{% url 'streamer_detail' stream.user_id %}">
                 <img src="{{ stream.profile_image_url }}" alt="{{ stream.user_name }}" width="50">
-                {{ stream.user_name }} - {{ stream.viewer_count }} viewers
+                {{ stream.user_name }} - {{ stream.viewer_count|intcomma }} viewers
             </a>
             {% endfor %}
         </ul>

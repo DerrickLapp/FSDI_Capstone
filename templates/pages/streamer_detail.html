@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %} {{ streamer.user_name }}{% endblock title %}
 
@@ -29,7 +30,7 @@
             </h2>
             <ul>
                 {% for key, value in updated_pdata.items %}
-                <li class="text-label">{{ key }}: {{ value }}</li>
+                <li class="text-label">{{ key }}: {{ value|intcomma }}</li>
                 {% endfor %}
             </ul>
         </div>
