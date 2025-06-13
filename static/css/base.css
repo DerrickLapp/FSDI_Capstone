@@ -19,10 +19,11 @@ html {
     font-size: 20px;
 }
 
-a, button {
+a {
     text-decoration: none;
     color: white;
-    background-color: var(--secondary-color) !important;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
+    border-radius: 5px;
 }
 
 /* Body */

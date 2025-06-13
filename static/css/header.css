@@ -3,7 +3,7 @@
 header {
     top: 0px;
     height: 100px;
-    background-color: var(--primary-color);
+    background: linear-gradient(to bottom, var(--primary-color), var(--background-color));
     color: var(--secondary-color);
     display: flex;
     position: sticky;
@@ -29,17 +29,19 @@ header {
     display: flex;
     justify-content: right;
     margin-right: 1.5rem;
+    align-items: flex-start;
 }
 
 .nav-options a, .nav-options form {
     color: #FFFFFF;
-    background-color: #4a5a5a;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
     text-transform: uppercase;
     font-size: 1.1rem;
     margin: 2% 1%;
     padding: 14px;
     border-radius: 2px;
     box-shadow: 2px 2px 2px #0a0a0a;
+    align-items: flex-start;
 }
 
 .nav-options form button {

@@ -78,7 +78,7 @@
 
 .contact_section button {
     color: #FFFFFF;
-    background-color: #4a5a5a;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
     text-transform: uppercase;
     margin: 2% 1%;
     padding: 7px;
@@ -107,7 +107,6 @@
     font-size: 1.1rem;
     margin: 2% 1%;
     padding: 14px;
-    border-radius: 2px;
     box-shadow: 2px 2px 2px #0a0a0a;
 }
 
@@ -371,7 +370,15 @@
     justify-content: center;
     align-items: center;
     margin-top: auto;
-    background-color: var(--secondary-color);
+    background: linear-gradient(to top, var(--secondary-color), var(--background-color));
     height: 5vh;
     width: 100%;
+}
+
+
+/* Success Message */
+.messages span{
+    padding: .5rem 5rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
 }

@@ -7,6 +7,13 @@
 
 {% block content %}
 <section class="trending_container center-column">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <span class="{{ message.tags }}">{{ message }}</span>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <h1 class="subtitles">Today's Top 20 Games</h1>
     <div class="top_games">
         <ul class="list-container">

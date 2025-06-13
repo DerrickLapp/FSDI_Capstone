@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
 from .utils import HEADERS, get_top_games, get_top_streams
@@ -80,7 +81,7 @@ def home_view(request):
                     ['derrickelapp@hotmail.com'] #To Email -> Where you want to get the email message
                 )
 
-                print("Email sent successfully")
+                messages.success(request, "Email sent successfully!")
                 #Render and redirect user
                 return redirect("home")
 
@@ -122,19 +123,24 @@ def game_detail(request, game_id):
     tturl = f"https://twitchtracker.com/api/games/summary/{game_id}"
     ttresponse = requests.get(tturl)
 
+
+    # Game Data from Twitch.tv
     if response.status_code == 200:
         data = response.json().get("data", [])
         
         for stream in data:
             streams.append({
                 "user_name": stream["user_name"],
+                "user_login": stream["user_login"],
                 "title": stream["title"],
                 "viewer_count": stream["viewer_count"],
                 "started_at": stream["started_at"],
-                "url": f"https://www.twitch.tv/{stream['user_name']}",
+                "url": f"https://www.twitch.tv/{stream["user_login"]}",
                 "thumbnail_url": stream["thumbnail_url"].replace("{width}", "300").replace("{height}", "400")
             })
 
+
+    # Game Data from TwitchTracker.com
     if ttresponse.status_code == 200:
         pdata = ttresponse.json()
         # pdata will hold 'avg_viewers', 'avg_channels', 'rank', and 'hours_watched'
@@ -194,8 +200,6 @@ def streamer_detail(request, user_id):
             pdata = {}
 
     updated_pdata = {key_change.get(k, k): v for k, v in pdata.items()}
-
-    print(response)
 
     return render(request, "pages/streamer_detail.html", {"streamer": streamer, "videos_data": videos_data, "is_favorited": is_favorited, "updated_pdata": updated_pdata})
 
