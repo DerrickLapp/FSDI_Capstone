@@ -329,17 +329,17 @@
 }
 
 .info-from-icon a {
-    padding: 0px !important;
+    padding: .2rem !important;
     margin: auto !important;
 }
 
 .info-from-icon .info-from-text {
-    margin-left: 1rem !important;
+    margin-left: 1.7rem !important;
     visibility: hidden;
     background-color: black;
     color: #fff;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
     font-size: small;
     border-radius: 6px;
     position: absolute;

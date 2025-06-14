@@ -35,7 +35,7 @@
                     <h3>{{ stream.user_name }}</h3>
                     <img src="{{ stream.thumbnail_url }}" alt="">
                     <p><strong>{{ stream.title | truncatechars:50 }}</strong></p>
-                    <p>Viewers: {{ stream.viewer_count }}</p>
+                    <p>Viewers: {{ stream.viewer_count|intcomma }}</p>
                     <p>Started at: {{ stream.started_at }}</p>
                     <a href="{{ stream.url }}" target="_blank">Watch Stream</a>
                 </div>

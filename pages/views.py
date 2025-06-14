@@ -15,7 +15,7 @@ import requests, json
 
 # Create your views here.
 def home_view(request):
-    # If last fetched time is > 10 minutes, get top games and streams
+    # If last fetched time is > 1 minute, get top games and streams
     latest_entry = Game.objects.order_by('-fetched_at').first()
 
     if not latest_entry or now() - latest_entry.fetched_at > timedelta(minutes=1):
