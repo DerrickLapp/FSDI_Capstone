@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-q34epahy!jg()c-$2kurp)l3&@er-(i6^3+#226r!zv*^un*ha
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'dttw-capstone-ch54-25494945fdd3.herokuapp.com'
+    'dttw-capstone-ch54-25494945fdd3.herokuapp.com',
+    '127.0.0.1',
 ]
 
 

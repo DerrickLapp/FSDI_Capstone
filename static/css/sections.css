@@ -76,7 +76,7 @@
     border-color: var(--secondary-color);
 }
 
-.contact_section button, .pass-change button {
+.contact_section button, .pass-change button, .registration-section button, .registration-section a {
     color: #FFFFFF;
     background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)) !important;
     text-transform: uppercase;
