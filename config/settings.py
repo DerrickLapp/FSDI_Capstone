@@ -154,3 +154,8 @@ EMAIL_USE_SSL=False
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER= os.getenv('SMTP_EMAIL')
 EMAIL_HOST_PASSWORD= os.getenv('SMTP_PASS')
+
+#if running in heroku, use postgres db instead of sqlite
+if "DYNO" in os.environ:
+    import django_heroku
+    django_heroku.settings(locals())
