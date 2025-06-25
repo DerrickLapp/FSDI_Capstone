@@ -111,7 +111,10 @@ def game_detail(request, game_id):
     user = request.user
     game = get_object_or_404(Game, game_id = game_id)
     game.box_art_url = game.box_art_url.replace("{width}", "300").replace("{height}", "400")
-    is_favorited = FavoriteGame.objects.filter(user=user, favorite_games=game).exists()
+    if user.is_authenticated:
+        is_favorited = FavoriteGame.objects.filter(user=user, favorite_games=game).exists()
+    else:
+        is_favorited = False
 
     
     # Fetches current streamers of Game
@@ -162,7 +165,10 @@ def streamer_detail(request, user_id):
     streamer = get_object_or_404(StreamData, user_id = user_id)
     user_login = streamer.user_login
     streamer.thumbnail_url = streamer.thumbnail_url.replace("{width}", "300").replace("{height}", "400")
-    is_favorited = FavoriteStreamer.objects.filter(user=user, favorite_streamers=streamer).exists()
+    if user.is_authenticated:
+        is_favorited = FavoriteStreamer.objects.filter(user=user, favorite_streamers=streamer).exists()
+    else:
+        is_favorited = False
 
     # Fetches current streaming stats
     url =f"https://api.twitch.tv/helix/streams?user_id={user_id}"
