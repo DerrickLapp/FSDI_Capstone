@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,8 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# Load environment variables from .env file
-load_dotenv()
+
 
 # Twitch Info
 TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
@@ -159,3 +160,24 @@ EMAIL_HOST_PASSWORD= os.getenv('SMTP_PASS')
 # if "DYNO" in os.environ:
 #     import django_heroku
 #     django_heroku.settings(locals())
+
+# AWS Config
+AWS_ACCESS_KEY_ID=os.getenv('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY=os.getenv('AWS_SECRET_KEY')
+AWS_STORAGE_BUCKET_NAME=os.getenv('AWS_BUCKET')
+AWS_S3_REGION_NAME=os.getenv('AWS_REGION')
+AWS_QUERYSTRING_AUTH=False
+
+MEDIA_URL = f"https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/"
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = "public-read"
+
+STORAGES = { 
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },    
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
